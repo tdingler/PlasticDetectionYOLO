@@ -3,7 +3,7 @@
 This is from ECOLYolo's Fall 2020 Senior Design project. 
 
 
-Introduction
+# Introduction
 
 This user guide covers how to set up and use darknet for plastic detection as well as training the model to create the necessary weights. To use the pre-trained weights, only the Using Detection Model is needed. 
 
@@ -13,7 +13,7 @@ This project uses darknet, a neural network designed for YOLO created by Joseph 
 
 
 
-Preparing the Dependencies
+# Preparing the Dependencies
 
 Installing the dependencies is necessary in order to complete training and processing within reasonable time constraints. 
 
@@ -25,7 +25,7 @@ Furthermore, to improve threading and speed, also install OpenMP by searching â€
 
 Using
 
-$pip install [package-name]
+`$pip install [package-name]`
 
 install the following packages below: 
 Cython
@@ -37,14 +37,14 @@ awscli
 
 
 
-3. Train the Model
+# 3. Train the Model
 
 To train new weights for the model, darknet must be installed. To install from source, complete follow the directions found at website [1]. 
 
 To adjust darknetâ€™s capabilities, change the makefile (Makefile) in the darknet folder setting GPU=1 if there is an NVIDIA GPU available on the used machine. Additionally, if cuDNN is installed, change CUDNN=1. Set OpenCV=1. Also, if OpenMP is installed, set OpenMP=1. These settings and modules installed will make the training process much faster. 
 
 To build the package run
-$make
+`$make`
 
 In the Trash-ICRA19 folder in cfgs_and_ckpts/yolo/cfg, adjust the following files to have the correct working directory paths: 
 test.txt
@@ -54,41 +54,42 @@ yolo.data
 
 To begin training, change the directory back to the darknet folder and run 
 
-$./darknet detector train /full_path_to/yolo.data /full_path_to/in_trash-icra19/yolo.cfg ./desired_beginning_weights &> /path_to/train.log
+`$./darknet detector train /full_path_to/yolo.data /full_path_to/in_trash-icra19/yolo.cfg ./desired_beginning_weights &> /path_to/train.log`
 
 
 
-    4. Using the Detection Model
+# 4. Using the Detection Model
 
 The different ways in using the detection model in darknet can be found on the READ.me linked in [4]. It is possible to apply the detection model to IP cameras, images, and videos. 
 
 
 
-Miscellaneous Notes
+# Miscellaneous Notes
 
 The format of the user manual was taken from [5] from a previous project. 
 
 In the event there is a desire to use the most recent version of YOLO. Make the following changes in MakeFile in darknet. 
 
-Change the section 
-ifeq ($(OPENCV), 1)
+Change the section
+
+`ifeq ($(OPENCV), 1)
 COMMON+= -DOPENCV
 CFLAGS+= -DOPENCV
 LDFLAGS+= `pkg-config --libs opencv` -lstdc++
 COMMON+= `pkg-config --cflags opencv`
-endif
+endif`
 
 to
 
-ifeq ($(OPENCV), 1)
+`ifeq ($(OPENCV), 1)
 COMMON+= -DOPENCV
 CFLAGS+= -DOPENCV
 LDFLAGS+= `pkg-config --libs opencv4` -lstdc++
 COMMON+= `pkg-config --cflags opencv4`
-endif
+endif`
 
 Additionally, in ./src/image_opencv.cpp remove the following lines: 
-IplImage *image_to_ipl(image im)
+`IplImage *image_to_ipl(image im)
 {
    int x,y,c;
    IplImage *disp = cvCreateImage(cvSize(im.w,im.h), IPL_DEPTH_8U, im.c);
@@ -138,11 +139,11 @@ image mat_to_image(Mat m)
    image im = ipl_to_image(&ipl);
    rgbgr_image(im);
    return im;
-}
+}`
 
 Add the following lines in ./src/image_opencv.cpp: 
 
-Mat image_to_mat(image im)
+`Mat image_to_mat(image im)
 {
 image copy = copy_image(im);
 constrain_image(copy);
@@ -179,7 +180,7 @@ for(i = 0; i < h; ++i){
 }
 rgbgr_image(im);
 return im;
-}
+}`
 
 
 References
