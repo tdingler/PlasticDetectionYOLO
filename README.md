@@ -72,24 +72,29 @@ In the event there is a desire to use the most recent version of YOLO. Make the 
 
 Change the section
 
-`ifeq ($(OPENCV), 1)
+```c
+ifeq ($(OPENCV), 1)
 COMMON+= -DOPENCV
 CFLAGS+= -DOPENCV
 LDFLAGS+= `pkg-config --libs opencv` -lstdc++
 COMMON+= `pkg-config --cflags opencv`
-endif`
+endif
+```
 
 to
 
-`ifeq ($(OPENCV), 1)
+```c
+ifeq ($(OPENCV), 1)
 COMMON+= -DOPENCV
 CFLAGS+= -DOPENCV
 LDFLAGS+= `pkg-config --libs opencv4` -lstdc++
 COMMON+= `pkg-config --cflags opencv4`
-endif`
+endif
+```
 
 Additionally, in ./src/image_opencv.cpp remove the following lines: 
-`IplImage *image_to_ipl(image im)
+```c
+IplImage *image_to_ipl(image im)
 {
    int x,y,c;
    IplImage *disp = cvCreateImage(cvSize(im.w,im.h), IPL_DEPTH_8U, im.c);
@@ -139,11 +144,13 @@ image mat_to_image(Mat m)
    image im = ipl_to_image(&ipl);
    rgbgr_image(im);
    return im;
-}`
+}
+```
 
 Add the following lines in ./src/image_opencv.cpp: 
 
-`Mat image_to_mat(image im)
+```c
+Mat image_to_mat(image im)
 {
 image copy = copy_image(im);
 constrain_image(copy);
@@ -180,7 +187,8 @@ for(i = 0; i < h; ++i){
 }
 rgbgr_image(im);
 return im;
-}`
+}
+```
 
 
 References
