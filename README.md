@@ -3,14 +3,6 @@
 This is from ECOLYolo's Fall 2020 Senior Design project. 
 
 
-Table of Contents
-Introduction
-Preparing the Dependencies
-Training the Model 
-Using the Detection Model 
-Miscellaneous Notes
-References
-
 Introduction
 
 This user guide covers how to set up and use darknet for plastic detection as well as training the model to create the necessary weights. To use the pre-trained weights, only the Using Detection Model is needed. 
